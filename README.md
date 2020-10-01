@@ -1,1 +1,3 @@
-﻿# employees-api
+﻿#  Employees API 
+ 
+ Express - Mongodb Atlas - Mongoose 
