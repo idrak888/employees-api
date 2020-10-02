@@ -7,7 +7,7 @@ var SpecsSchema = new Schema({
     setup_pic: String
 });
 
-const Specs = mongoose.model('User', SpecsSchema);
+const Specs = mongoose.model('Specs', SpecsSchema);
 
 module.exports = {
 	Specs
