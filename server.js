@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Employee } = require('./db/Employee');
+const { Specs } = require('./db/Specs');
  
 const app = express();
 var port = process.env.PORT || 3100;
@@ -54,6 +55,21 @@ app.post("/new_employee", (req, res) => {
     });
 });
 
+app.post("/register_spec", (req, res) => {
+	var NewSpecsInfo = new Specs({
+        _id: req.body.user_id,
+		specs: req.body.specs,
+		setup_pic: req.body.setup_pic
+	});
+
+	NewSpecsInfo.save().then((doc) => {
+		res.send(doc);
+	}).catch(e => {
+        res.send(e);
+    });
+});
+
+
 //update employee position
 app.post("/update_employee_position/:id", (req, res) => {
 	var _id = req.params.id;
@@ -70,6 +86,42 @@ app.delete("/employee/:id", (req, res) => {
 	var _id = req.params.id;
 
 	Employee.find({_id}).remove().then(doc => {
+		res.send(doc);
+	}).catch(e => {
+		res.send(e);
+	});
+});
+
+
+//discord pc specs bot stuff
+app.get("/specs/:id", (req, res) => {
+	var _id = req.params.id;
+ 
+	Specs.find({_id}).then(doc => {
+		res.send(doc);
+	}).catch(e => {
+		res.send(e);
+	});
+});
+
+app.post("/register_spec", (req, res) => {
+	var NewSpecsInfo = new Specs({
+        _id: req.body.user_id,
+		specs: req.body.specs,
+		setup_pic: req.body.setup_pic
+	});
+
+	NewSpecsInfo.save().then((doc) => {
+		res.send(doc);
+	}).catch(e => {
+        res.send(e);
+    });
+});
+
+app.post("/update_setup_pic/:id", (req, res) => {
+	var _id = req.params.id;
+	
+	Specs.findOneAndUpdate({ _id }, { setup_pic: req.body.setup_pic }).then(doc => {
 		res.send(doc);
 	}).catch(e => {
 		res.send(e);
