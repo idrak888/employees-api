@@ -130,14 +130,29 @@ app.post("/register_spec", (req, res) => {
     });
 });
 
-app.post("/update_setup_pic/:id", (req, res) => {
+app.post("/update_specs/:id", (req, res) => {
 	var _id = req.params.id;
 	
-	Specs.findOneAndUpdate({ _id }, { setup_pic: req.body.setup_pic }).then(doc => {
-		res.send(doc);
-	}).catch(e => {
-		res.send(e);
-	});
+	if (req.body.specs !== "" && req.body.setup_pic !== "") {
+		Specs.findOneAndUpdate({ _id }, { specs: req.body.specs, setup_pic: req.body.setup_pic }).then(doc => {
+			res.send(doc);
+		}).catch(e => {
+			res.send(e);
+		});
+	} else if (req.body.specs !== "") {
+		Specs.findOneAndUpdate({ _id }, { specs: req.body.specs }).then(doc => {
+			res.send(doc);
+		}).catch(e => {
+			res.send(e);
+		});
+	} else if (req.body.setup_pic !== "") {
+		Specs.findOneAndUpdate({ _id }, { setup_pic: req.body.setup_pic }).then(doc => {
+			res.send(doc);
+		}).catch(e => {
+			res.send(e);
+		});
+	}
+	
 });
 
 app.listen(port, () => {
