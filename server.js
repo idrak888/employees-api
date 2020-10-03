@@ -93,7 +93,19 @@ app.delete("/employee/:id", (req, res) => {
 });
 
 
+
+
+
+
 //discord pc specs bot stuff
+app.get("/all_specs", (req, res) => {
+	Specs.find().then(doc => {
+        res.send(doc);
+    }).catch(e => {
+		res.send(e);
+	});
+});
+
 app.get("/specs/:id", (req, res) => {
 	var _id = req.params.id;
  
